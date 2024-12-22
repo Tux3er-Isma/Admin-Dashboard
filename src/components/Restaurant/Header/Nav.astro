@@ -1,0 +1,73 @@
+---
+const { icon, title, restaurant } = Astro.props;
+---
+
+<nav class="nav" data-restaurant={restaurant}>
+    <img src={icon} alt={`THECUBE${title}`} class="nav__icon" />
+    <h1 class="nav__title">
+        THE CUBE <span class="nav__title--color">{title}</span>
+    </h1>
+</nav>
+
+<style lang="scss">
+    .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        position: fixed;
+        width: 100%;
+
+        &__icon {
+            width: 100px;
+            height: 100px;
+        }
+
+        &__title {
+            font-size: 50px;
+            font-family: "Bebas Neue", sans-serif;
+
+            &--color {
+                font-family: "Bebas Neue", sans-serif;
+            }
+        }
+    }
+
+    [data-restaurant="1"] {
+        background-color: #ff9500;
+        border-bottom: 2px solid #592d00;
+
+        .nav__title {
+            color: #fff;
+
+            &--color {
+                color: #592d00;
+            }
+        }
+    }
+
+    [data-restaurant="2"] {
+        background-color: #f8dec8;
+        border-bottom: 2px solid #af0000;
+
+        .nav__title {
+            color: #000;
+
+            &--color {
+                color: #af0000;
+            }
+        }
+    }
+
+    [data-restaurant="3"] {
+        background-color: #191a1c;
+        border-bottom: 2px solid #ff9500;
+
+        .nav__title {
+            color: #fff;
+
+            &--color {
+                color: #ff9500;
+            }
+        }
+    }
+</style>

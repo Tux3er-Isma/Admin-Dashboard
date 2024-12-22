@@ -1,0 +1,31 @@
+---
+import Card from "./Card.astro"
+
+import Sticker1 from "../../../assets/Main/Restaurants/r-1/sticker-1.png"
+import Sticker2 from "../../../assets/Main/Restaurants/r-2/sticker-2.png"
+import Sticker3 from "../../../assets/Main/Restaurants/r-3/sticker-3.png"
+---
+
+<main class="main">
+    <div class="main__card-container">
+        <Card icon={Sticker1} name="DAY" restaurant="1" link="/thecubeday"></Card>
+        <Card icon={Sticker2} name="FUSION" restaurant="2" link="/thecubefusion"></Card>
+        <Card icon={Sticker3} name="DELAFONT" restaurant="3" link="/thecubedelafont"></Card>
+    </div>
+</main>
+
+<style lang="scss">
+    .main{
+        margin-top: 20px;
+        width: 100vw;
+
+        &__card-container{
+
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 30px;
+            align-items: center;
+        }
+    }
+</style>

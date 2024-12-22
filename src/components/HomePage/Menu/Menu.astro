@@ -1,0 +1,93 @@
+---
+import Item from "./Item.astro"
+---
+
+<menu class="menu">
+    <nav class="menu__nav">
+        <i class="fa-solid fa-x menu__nav__icon"></i>
+        <h1 class="menu__nav__title">THECUBE</h1>
+    </nav>
+    <main class="menu__main">
+        <ul class="menu__main__list-container">
+            <Item title="TheCubeDay" link="/thecubeday"></Item>
+            <Item title="TheCubeFusion" link="thecubefusion"></Item>
+            <Item title="TheCubeDeLaFont" link="thecubedelafont"></Item>
+        </ul>
+    </main>
+</menu>
+
+<style lang="scss">
+    .menu {
+        width: 70vw;
+        height: 100vh;
+        background: rgba(255, 219, 172, 0.759);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        border: 1px solid rgb(0, 0, 0);
+        position: absolute;
+        z-index: 2;
+        transform: translateX(-70vw);
+
+        @keyframes appear{
+            0%{
+                transform: translateX(-70vw);
+            }
+
+            100%{
+                transform: translateX(0vw);
+            }
+        }
+
+        @keyframes disappear{
+            0%{
+                transform: translateX(0vw);
+            }
+
+            100%{
+                transform: translateX(-70vw);
+            }
+        }
+
+        &__nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 10px;
+
+            &__icon {
+                font-size: 30px;
+                position: relative;
+                left: 10px;
+                color: #603b2a;
+            }
+
+            &__title {
+                position: relative;
+                right: 10px;
+                font-size: 20px;
+                font-weight: 900;
+                color: #603b2a;
+            }
+        }
+
+        &__main{
+            margin-top: 30px;
+
+            &__list-container{
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    }
+</style>
+
+<script is:inline>
+    const openIcon = document.querySelector('.menu__nav__icon');
+    const openMenu = document.querySelector(".menu");
+    openIcon.addEventListener("click", () => {
+        menuClosed.style.animation = "disappear .3s forwards";
+    });
+</script>

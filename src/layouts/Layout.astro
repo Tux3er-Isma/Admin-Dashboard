@@ -1,22 +1,254 @@
+---
+//Components
+//Astro Components
+import ClientRouter from "astro/components/ClientRouter.astro";
+
+//Img
+import icon from "../assets/Icons/icon.png";
+import pymewebteam from "../assets/Icons/pymewebteam.png";
+
+//Font Source
+//Poppins
+import "@fontsource/poppins/100.css";
+import "@fontsource/poppins/200.css";
+import "@fontsource/poppins/300.css";
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/500.css";
+import "@fontsource/poppins/600.css";
+import "@fontsource/poppins/700.css";
+import "@fontsource/poppins/800.css";
+import "@fontsource/poppins/900.css";
+
+//Bebas Neue
+import "@fontsource/bebas-neue";
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href={icon.src} />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>PymeWebTeam Reservation</title>
+		<script
+			src="https://kit.fontawesome.com/a1618bce8f.js"
+			crossorigin="anonymous"></script>
 	</head>
 	<body>
-		<slot />
+		<div class="principal-container">
+			<slot />
+		</div>
+		<div class="animation">
+			<img src={icon.src} alt="PymeWebTeam" class="animation__icon" />
+			<div class="animation__content">
+				<h1 class="animation__content__title">THE CUBE</h1>
+				<div class="animation__content__subtitle-container">
+					<h2
+						class="animation__content__subtitle-container__subtitle"
+					>
+						by
+					</h2>
+					<img
+						src={pymewebteam.src}
+						alt="PymeWebTeam"
+						class="animation__content__subtitle-container__img"
+					/>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
 
-<style>
-	html,
-	body {
+<style is:global lang="scss">
+	* {
 		margin: 0;
-		width: 100%;
-		height: 100%;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: "Poppins", sans-serif;
+	}
+
+	body {
+		background-color: #fbeee0;
+	}
+
+	a {
+		color: initial;
+		text-decoration: none;
+	}
+
+	a:visited {
+		color: initial;
+	}
+
+	.principal-container {
+		display: none;
+	}
+
+	.animation {
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 20px;
+
+		&__icon {
+			width: 50px;
+			height: 50px;
+			position: relative;
+			bottom: 10px;
+			animation: appear1 1s forwards cubic-bezier(0.58, 0.09, 0, 0.82);
+		}
+
+		&__content {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+			animation: appear2 1s forwards cubic-bezier(0.58, 0.09, 0, 0.82);
+
+			&__title {
+				font-family: "Bebas Neue", sans-serif;
+				font-weight: 900;
+				line-height: 50px;
+				font-size: 60px;
+			}
+
+			&__subtitle-container {
+				display: flex;
+				align-items: flex-start;
+				gap: 10px;
+
+				&__subtitle {
+					font-family: "Poppins", sans-serif;
+					font-size: 13px;
+					font-weight: 400;
+				}
+
+				&__img {
+					width: 70px;
+					position: relative;
+					top: 3.5px;
+				}
+			}
+		}
+
+		@keyframes appear1 {
+			0% {
+				transform: translateX(-50vw);
+			}
+
+			100% {
+				transform: translateX(0vw);
+			}
+		}
+
+		@keyframes appear2 {
+			0% {
+				transform: translateX(50vw);
+			}
+
+			100% {
+				transform: translateX(0vw);
+			}
+		}
 	}
 </style>
+
+<script is:inline>
+	const principalContainer = document.querySelector(".principal-container");
+	const animationContainer = document.querySelector(".animation");
+
+	// Verifica si la animación ya se ejecutó
+	if (!localStorage.getItem("animationPlayed")) {
+		// Si no se ha ejecutado, muestra la animación
+		setTimeout(() => {
+			principalContainer.style.display = "block";
+			animationContainer.style.display = "none";
+
+			// Marca la animación como ejecutada
+			localStorage.setItem("animationPlayed", "true");
+		}, 2000);
+	} else {
+		// Si ya se ejecutó, salta directamente al contenido principal
+		principalContainer.style.display = "block";
+		animationContainer.style.display = "none";
+	}
+</script>
+<script
+	src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.min.js"
+	is:raw></script>
+<script is:inline>
+	if (!("Notification" in window)) {
+		alert("Tu navegador no soporta notificaciones.");
+	}
+
+	// Supabase: Inicialización y suscripción
+	const supabasePublicClient = supabase.createClient(
+		"https://ntihsielwhbvsdrakvhb.supabase.co",
+		"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im50aWhzaWVsd2hidnNkcmFrdmhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg4MjU5ODIsImV4cCI6MjA0NDQwMTk4Mn0.LhveM1sPAh2P3pxAbK2EyXcJWah56V6_4L01T6mmQtU",
+	);
+
+	const getData = async () => {
+		await supabasePublicClient
+			.channel("reservation")
+			.on(
+				"postgres_changes",
+				{
+					event: "INSERT",
+					schema: "public",
+					table: "reservation",
+				},
+				(payload) => {
+					if (Notification.permission === "granted") {
+						navigator.serviceWorker.register("sw.js");
+						Notification.requestPermission(function (result) {
+							if (result === "granted") {
+								navigator.serviceWorker.ready.then(
+									function (registration) {
+										registration.showNotification(
+											`Nueva Reserva en THE CUBE ${payload.new.restaurant}`,
+											{
+												body: `${payload.new.date} a las ${payload.new.hour} para ${payload.new.people} con nombre ${payload.new.name}`,
+											},
+										);
+									},
+								);
+							}
+						});
+					} else if (Notification.permission === "default") {
+						Notification.requestPermission().then((perm) => {
+							if (perm === "granted") {
+								navigator.serviceWorker.register("sw.js");
+								Notification.requestPermission(
+									function (result) {
+										if (result === "granted") {
+											navigator.serviceWorker.ready.then(
+												function (registration) {
+													registration.showNotification(
+														`Nueva Reserva en THE CUBE ${payload.new.restaurant}`,
+														{
+															body: `${payload.new.date} a las ${payload.new.hour} para ${payload.new.people} con nombre ${payload.new.name}`,
+														},
+													);
+												},
+											);
+										}
+									},
+								);
+							} else {
+								alert("Has bloqueado las notis");
+							}
+						});
+					} else {
+						alert("Has bloqueado las notis");
+					}
+
+					console.log(payload);
+				},
+			)
+			.subscribe();
+	};
+
+	getData();
+</script>

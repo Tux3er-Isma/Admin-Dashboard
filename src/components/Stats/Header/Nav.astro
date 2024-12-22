@@ -1,0 +1,31 @@
+---
+
+---
+
+<nav class="nav">
+    <a href="/" class="fa-solid fa-arrow-left nav__arrow"></a>
+    <h1 class="nav__title">Mi Panel</h1>
+</nav>
+
+<style lang="scss">
+    .nav {
+        display: flex;
+        position: fixed;
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        justify-content: center;
+        border-bottom: 1px solid #603b2a;
+        background: rgba(255, 219, 172, 0.759);
+        // box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        // border: 1px solid rgb(0, 0, 0);
+
+        &__arrow {
+            position: absolute;
+            left: 10px;
+            font-size: 30px;
+        }
+    }
+</style>

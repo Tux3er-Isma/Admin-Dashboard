@@ -1,0 +1,63 @@
+---
+const { icon, title, restaurant } = Astro.props;
+
+import Header from '../components/Restaurant/Header/Header.astro';
+import Main from "../components/Restaurant/Main/Main.astro";
+
+//Font Source
+//Poppins
+import '@fontsource/poppins/100.css';
+import '@fontsource/poppins/200.css';
+import '@fontsource/poppins/300.css';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
+import '@fontsource/poppins/800.css';
+import '@fontsource/poppins/900.css';
+
+//Bebas Neue
+import '@fontsource/bebas-neue';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href={icon} />
+		<meta name="generator" content={Astro.generator} />
+		<title>Admin Dashboard THECUBE{title}</title>
+		<script src="https://kit.fontawesome.com/a1618bce8f.js" crossorigin="anonymous"></script>
+	</head>
+	<body data-restaurant={restaurant}>
+        <!-- <Header icon={icon} title={title} restaurant={restaurant}></Header> -->
+        <Main restaurant={restaurant}></Main>
+	</body>
+</html>
+
+<style is:global lang="scss">
+	*{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: 'Poppins', sans-serif;
+	}
+
+	body{
+		background-color: #fbeee0;
+	}
+
+    [data-restaurant="1"]{
+        background-color: #FF7700;
+    }
+
+    [data-restaurant="2"]{
+        background-color: #F8DEC8;
+    }
+
+    [data-restaurant="3"]{
+        background-color: #191A1C;
+        color: #fff;
+    }
+</style>

@@ -1,0 +1,18 @@
+---
+//Components
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Stats/Header/Header.astro";
+import Main from "../components/Stats/Main/Main.astro";
+
+//Supabase
+import { supabase } from "../lib/supabase";
+
+let { data: reservation, error } = await supabase
+  .from("reservation")
+  .select("*");
+let reservationArr = reservation?.reverse();
+---
+<Layout title="Stats">
+    <Header></Header>
+    <Main></Main>
+</Layout>

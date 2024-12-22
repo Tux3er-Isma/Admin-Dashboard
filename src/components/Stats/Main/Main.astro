@@ -1,0 +1,64 @@
+---
+//Components
+import Card from "./Card.astro";
+
+//Supabase
+import { supabase } from "../../../lib/supabase";
+
+let { data: reservation, error } = await supabase
+  .from("reservation")
+  .select("*");
+let reservationArr = reservation?.reverse();
+---
+
+<main class="main">
+    <div class="main__total-container">
+        <p class="main__total-container__total">{reservationArr?.length}</p>
+        <h1 class="main__total-container__title">Total de reservas</h1>
+    </div>
+    <h1 class="main__title">Reservas:</h1>
+    <div class="main__booking-container">
+        <Card></Card>
+    </div>
+</main>
+
+<style lang="scss">
+    .main{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 30px;
+
+        &__total-container{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display: flex;
+            width: 85%;
+            justify-content: space-evenly;
+            border: 2px solid #603b2a;
+            border-radius: 30px;
+
+            &__total{
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            &__title{
+                font-size: 20px;
+                font-weight: 400;
+            }
+        }
+
+        &__title{
+            width: 85%;
+            margin-top: 30px;
+        }
+
+        &__booking-container{
+            width: 85%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+    }
+</style>

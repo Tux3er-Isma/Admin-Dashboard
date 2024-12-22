@@ -1,0 +1,15 @@
+---
+const { icon, title, restaurant } = Astro.props;
+import Nav from "./Nav.astro";
+---
+
+<header class="header">
+    <Nav icon={icon} title={title} restaurant={restaurant}></Nav>
+</header>
+
+<style lang="scss">
+    .header{
+        width: 100vw;        
+        height: 150px;
+    }
+</style>

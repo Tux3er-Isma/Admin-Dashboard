@@ -1,0 +1,27 @@
+---
+const { title, link } = Astro.props;
+---
+
+<a class="item" href={link}>
+    <div class="item__triangle"></div>
+    <p class="item__txt">{title}</p>
+</a>
+
+<style lang="scss">
+    .item{
+        display: flex;
+        align-items: center;
+        width: 60%;
+        gap: 10px;
+        position: relative;
+        left: 20px;
+
+        &__triangle{
+            width: 10px;
+            height: 10px;
+            border-top: 3px solid #603b2a;
+            border-right: 3px solid #603b2a;
+            transform: rotate(45deg);
+        }
+    }
+</style>

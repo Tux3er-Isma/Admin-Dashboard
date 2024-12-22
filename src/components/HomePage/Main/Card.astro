@@ -1,0 +1,156 @@
+---
+const { icon, name, restaurant, link } = Astro.props;
+
+import Tags from "./Tags.astro";
+---
+
+<div class="card" data-restaurant={restaurant}>
+    <header class="card__header">
+        <div class="card__header__content-container">
+            <img
+                src={icon.src}
+                alt={`TheCube${name}`}
+                class="card__header__content-container__icon"
+            />
+            <h1 class="card__header__content-container__title">
+                THE CUBE <span
+                    class="card__header__content-container__title--color"
+                    >{name}</span
+                >
+            </h1>
+        </div>
+        <a
+            href={link}
+            class="fa-solid fa-arrow-up-right-from-square card__header__icon"
+        ></a>
+    </header>
+    <main class="card__main">
+        <div class="card__main__marquee__content">
+            <Tags
+                icon="utensils"
+                title="Gestionar Reservas"
+                restaurant={restaurant}
+                link={link}
+            />
+        </div>
+    </main>
+</div>
+
+<style lang="scss">
+    .card {
+        display: flex;
+        flex-direction: column;
+        width: 85vw;
+        border-radius: 20px;
+
+        &__header {
+            position: relative;
+            left: 10px;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &__content-container {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+
+                &__icon {
+                    width: 50px;
+                    height: 50px;
+                }
+
+                &__title {
+                    font-family: "Bebas Neue", sans-serif;
+
+                    &--color {
+                        font-family: "Bebas Neue", sans-serif;
+                    }
+                }
+            }
+
+            &__icon {
+                font-size: 30px;
+                position: relative;
+                right: 20px;
+            }
+        }
+
+        &__main {
+            height: 60px;
+
+            &__marquee {
+                &__content {
+                    display: flex;
+                    gap: 10px;
+                    width: 100%;
+                    display: flex;
+                    justify-content: flex-end;
+                    position: relative;
+                    right: 15px;
+                }
+            }
+        }
+    }
+
+    .card[data-restaurant="1"] {
+        background-color: #ff9500;
+
+        .card__header {
+            &__content-container {
+                &__title {
+                    color: #fff;
+
+                    &--color {
+                        color: #592d00;
+                    }
+                }
+            }
+
+            &__icon {
+                color: #592d00;
+            }
+        }
+    }
+
+    .card[data-restaurant="2"] {
+        background-color: #f8dec8;
+
+        .card__header {
+            &__content-container {
+                &__title {
+                    color: #000;
+
+                    &--color {
+                        color: #af0000;
+                    }
+                }
+            }
+
+            &__icon {
+                color: #af0000;
+            }
+        }
+    }
+
+    .card[data-restaurant="3"] {
+        background-color: #191a1c;
+
+        .card__header {
+            &__content-container {
+                &__title {
+                    color: #fff;
+
+                    &--color {
+                        color: #ff9500;
+                    }
+                }
+            }
+
+            &__icon {
+                color: #ff9500;
+            }
+        }
+    }
+</style>
