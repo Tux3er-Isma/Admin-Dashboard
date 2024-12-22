@@ -1,7 +1,7 @@
-import { e as createComponent, r as renderTemplate, i as renderComponent } from '../chunks/astro/server_AzqMR3Zz.mjs';
+import { c as createComponent, r as renderTemplate, g as renderComponent } from '../chunks/astro/server_B9eqz-CR.mjs';
 import 'kleur/colors';
 import 'html-escaper';
-import { $ as $$Restaurant } from '../chunks/Restaurant_CPxwFKGg.mjs';
+import { $ as $$Restaurant } from '../chunks/Restaurant_BQLpPs_d.mjs';
 import { S as Sticker1 } from '../chunks/sticker-1_D-bUgRcf.mjs';
 export { renderers } from '../renderers.mjs';
 
