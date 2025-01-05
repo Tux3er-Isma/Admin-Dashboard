@@ -95,7 +95,7 @@ function formatDate(dateString: string): string {
     .card{
         padding: 10px;
         width: 100%;
-        height: 350px;
+        height: fit-content;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -114,6 +114,16 @@ function formatDate(dateString: string): string {
         &__title{
             font-weight: 900;
             font-size: 20px;
+            width: 90%;
+            // display: flex;
+
+            &--data{
+        //       width: max-content; // Alternativa más robusta que fit-content
+        // min-width: 50px; // Evita que se colapse
+        // display: inline-block; // Asegura que respete el ancho
+        // padding: 2px 5px; // Añade un poco de espacio interno
+        overflow-wrap: break-word; // Si hay texto largo, rompe la línea
+            }
         }
     }
 
