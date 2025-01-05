@@ -75,6 +75,8 @@ function formatDate(dateString: string): string {
   <div class="card" data-restaurant={res.restaurantId}>
     <h1 class="card__ultra-title">Reserva</h1>
     <p class="card__title"> Nombre: <span class="card__title--data">{res.name}</span></p>
+    <p class="card__title"> Email: <span class="card__title--data">{res.email}</span></p>
+    <p class="card__title"> Número de Teléfono: <span class="card__title--data">{res.phone}</span></p>
     <p class="card__title">Hora: <span class="card__title--data">{res.hour}</span></p>
     <p class="card__title">Fecha: <span class="card__title--data">{formatDate(res.date)}</span></p>
     <p class="card__title">Personas: <span class="card__title--data">{res.people}</span></p>
