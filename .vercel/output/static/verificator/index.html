@@ -1,0 +1,239 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/_astro/icon.CB3sXh-v.png"><meta name="generator" content="Astro v5.0.5"><title>PymeWebTeam Reservation</title><script src="https://kit.fontawesome.com/a1618bce8f.js" crossorigin="anonymous"></script><style>.header[data-astro-cid-54yrv3kt]{display:flex;flex-direction:column;align-items:center;text-align:center;color:#000}.header__title[data-astro-cid-54yrv3kt]{font-size:95px;font-family:Bebas Neue,sans-serif}.header__subtitle[data-astro-cid-54yrv3kt]{font-family:Poppins,sans-serif;font-size:16px}.main[data-astro-cid-dow32uny]{display:flex;flex-direction:column;width:100vw;align-items:center}.main__title[data-astro-cid-dow32uny]{font-size:20px;color:#000;font-family:Poppins,sans-serif;font-weight:200;text-align:center}.main__inpt[data-astro-cid-dow32uny]{margin-top:10px;margin-bottom:20px;background-color:#ffdfb1;border:none;outline:none;text-align:center;border-radius:106px;height:102px;font-family:Bebas Neue,sans-serif;color:#000;font-size:60px;width:50%}.main__btn[data-astro-cid-dow32uny]{background-color:#16c47f;color:#320d0d;font-family:Bebas Neue,sans-serif;font-weight:400;font-size:26px;padding:10px;width:230px;border-radius:13px;border:1px solid #000;transition:all .5s}.main__btn[data-astro-cid-dow32uny]:hover{background-color:#000;border:1px solid #16C47F;color:#16c47f}.main__canceled[data-astro-cid-dow32uny]{background-color:#cfffcc;color:#2c5a2c;border:1px solid #cfffcc}.main__canceled[data-astro-cid-dow32uny]:hover{border:1px solid #2c5a2c;background-color:#2c5a2c;color:#cfffcc}@media only screen and (max-width: 480px){.main__inpt[data-astro-cid-dow32uny]{width:90%}}.body-container[data-astro-cid-gs42w532]{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100vw;height:100vh;padding:20px}
+</style>
+<link rel="stylesheet" href="/_astro/index.DHO-3tnk.css">
+<style>*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}body{background-color:#fbeee0;overflow-x:hidden}a{color:initial;text-decoration:none}a:visited{color:initial}.principal-container{display:none}.animation{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;gap:20px}.animation__icon{width:50px;height:50px;position:relative;bottom:10px;animation:appear1 1s forwards cubic-bezier(.58,.09,0,.82)}.animation__content{display:flex;flex-direction:column;align-items:flex-end;animation:appear2 1s forwards cubic-bezier(.58,.09,0,.82)}.animation__content__title{font-family:Bebas Neue,sans-serif;font-weight:900;line-height:50px;font-size:60px}.animation__content__subtitle-container{display:flex;align-items:flex-start;gap:10px}.animation__content__subtitle-container__subtitle{font-family:Poppins,sans-serif;font-size:13px;font-weight:400}.animation__content__subtitle-container__img{width:70px;position:relative;top:3.5px}@keyframes appear1{0%{transform:translate(-50vw)}to{transform:translate(0)}}@keyframes appear2{0%{transform:translate(50vw)}to{transform:translate(0)}}
+</style></head> <body> <div class="principal-container">  <div class="body-container" data-astro-cid-gs42w532> <header class="header" data-astro-cid-54yrv3kt> <h1 class="header__title" data-astro-cid-54yrv3kt>Verificar Código</h1> <h2 class="header__subtitle" data-astro-cid-54yrv3kt>TheCube<span class="header__subtitle__restaurant" data-astro-cid-54yrv3kt>World</span></h2> </header>  <main class="main" data-astro-cid-dow32uny> <h2 class="main__title" data-astro-cid-dow32uny>
+Introduzca el código que le enseñe el cliente
+</h2> <input type="text" placeholder="A834U0JFAFJ983" class="main__inpt" data-astro-cid-dow32uny> <button type="submit" class="main__btn" data-astro-cid-dow32uny>Verificar</button> </main> <!-- <Popup></Popup> -->  <script>
+    const inpt = document.querySelector(".main__inpt");
+    const btn = document.querySelector(".main__btn");
+    const popup = document.querySelector('.popup');
+    let cookiesCode = localStorage.getItem("code");
+    let allowed;
+    let foodCode;
+    let foodWinner;
+
+    // if (cookiesCode != null) {
+    //     inpt.value = cookiesCode;
+    //     localStorage.removeItem("code");
+    // }
+
+    if (inpt.value.trim() == "") {
+        btn.style.cursor = "not-allowed";
+        allowed = false;
+    }
+
+// Fix the event listener for input validation
+inpt.addEventListener("keyup", async (evt) => {
+    // Inicializar Supabase
+    const { createClient } = supabase;
+
+    const SUPABASE_URL = "https://ntihsielwhbvsdrakvhb.supabase.co";
+    const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im50aWhzaWVsd2hidnNkcmFrdmhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg4MjU5ODIsImV4cCI6MjA0NDQwMTk4Mn0.LhveM1sPAh2P3pxAbK2EyXcJWah56V6_4L01T6mmQtU";
+
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Basic length validation
+    if (evt.target.value.length < 14) {
+        btn.style.cursor = "not-allowed";
+        allowed = false;
+        return;
+    }
+
+    // Get reservations that match the code (more efficient than getting all)
+    let { data: codes, error } = await supabaseClient
+        .from("codes")
+        .select("*")
+        .eq("code", evt.target.value.trim());
+    foodCode = codes;
+
+    if (error) {
+        console.log("Error al obtener las reservas:", error);
+        btn.style.cursor = "not-allowed";
+        allowed = false;
+        return;
+    }
+
+    // Check if any reservation with this code exists
+    if (codes && codes.length > 0) {
+        console.log("Codigo encontrado");
+        btn.style.cursor = "pointer";
+        allowed = true;
+    } else {
+        console.log("No existe el código");
+        btn.style.cursor = "not-allowed";
+        allowed = false;
+    }
+
+    console.log(foodCode[0].code)
+
+    if (foodCode[0].code.startsWith('1')) {
+        foodWinner = "Crepe";
+        console.log("Crepe");
+    } else if (foodCode[0].code.startsWith('2')) {
+        foodWinner = "Tequeños";
+        console.log("Tequeños");
+    } else if (foodCode[0].code.startsWith('3')) {
+        console.log("Caña");
+        foodWinner = "Caña";
+    } else if (foodCode[0].code.startsWith('4')) {
+        console.log("1 Salchipapa");
+        foodWinner = "Salchipapa";
+    } else if (foodCode[0].code.startsWith('5')) {
+        console.log("1 Coctail");
+        foodWinner = "Coctail";
+    } else if (foodCode[0].code.startsWith('6')) {
+        console.log("50% Cena 1p");
+        foodWinner = "50% Cena 1p";
+    }
+});
+
+
+// Fix the click event handler for actual cancellation
+btn.addEventListener("click", async () => {
+    if (!allowed) {
+        console.log("No existe el código");
+        alert("No existe el código")
+        inpt.value = "";
+        btn.classList.remove("main__not-exist");
+        allowed = false;
+        btn.style.cursor = "not-allowed";
+        return;
+    }
+
+    let code = inpt.value.trim();
+    // Inicializar Supabase
+    const { createClient } = supabase;
+
+    const SUPABASE_URL = "https://ntihsielwhbvsdrakvhb.supabase.co";
+    const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im50aWhzaWVsd2hidnNkcmFrdmhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg4MjU5ODIsImV4cCI6MjA0NDQwMTk4Mn0.LhveM1sPAh2P3pxAbK2EyXcJWah56V6_4L01T6mmQtU";
+
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Delete the reservation
+    const { data: deletedReservation, error } = await supabaseClient
+        .from("codes")
+        .delete()
+        .eq("code", code)
+        .select()
+
+    if (error) {
+        console.log("Error al cancelar la reserva:", error);
+        return;
+    }
+
+    // // Show success state
+    // popup.style.opacity= '1';
+    // popup.style.zIndex = "2";
+    // console.log("Reserva cancelada exitosamente");
+    // console.log("Detalles de la reserva cancelada:", deletedReservation);
+    // btn.classList.add("main__canceled");
+    // btn.innerHTML = "Reserva Cancelada";
+
+    
+    setTimeout(() => {
+        inpt.value = "";
+        btn.classList.remove("main__canceled");
+        btn.innerHTML = "CÓDIGO VERIFICADO";
+        alert(`El cliente ha ganado: ${foodWinner}`);
+        allowed = false;
+        btn.style.cursor = "not-allowed";
+    }, 2000);
+});
+</script> </div>  </div> <div class="animation"> <img src="/_astro/icon.CB3sXh-v.png" alt="PymeWebTeam" class="animation__icon"> <div class="animation__content"> <h1 class="animation__content__title">THE CUBE</h1> <div class="animation__content__subtitle-container"> <h2 class="animation__content__subtitle-container__subtitle">
+by
+</h2> <img src="/_astro/pymewebteam.BDzzjIjz.png" alt="PymeWebTeam" class="animation__content__subtitle-container__img"> </div> </div> </div>  <script>
+	const principalContainer = document.querySelector(".principal-container");
+	const animationContainer = document.querySelector(".animation");
+
+	// Verifica si la animación ya se ejecutó
+	if (!localStorage.getItem("animationPlayed")) {
+		// Si no se ha ejecutado, muestra la animación
+		setTimeout(() => {
+			principalContainer.style.display = "block";
+			animationContainer.style.display = "none";
+
+			// Marca la animación como ejecutada
+			localStorage.setItem("animationPlayed", "true");
+		}, 2000);
+	} else {
+		// Si ya se ejecutó, salta directamente al contenido principal
+		principalContainer.style.display = "block";
+		animationContainer.style.display = "none";
+	}
+</script> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.min.js"></script> <script>
+	// if (!("Notification" in window)) {
+	// 	alert("Tu navegador no soporta notificaciones.");
+	// }
+
+	// Supabase: Inicialización y suscripción
+	const supabasePublicClient = supabase.createClient(
+		"https://ntihsielwhbvsdrakvhb.supabase.co",
+		"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im50aWhzaWVsd2hidnNkcmFrdmhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg4MjU5ODIsImV4cCI6MjA0NDQwMTk4Mn0.LhveM1sPAh2P3pxAbK2EyXcJWah56V6_4L01T6mmQtU",
+	);
+
+	const getData = async () => {
+		await supabasePublicClient
+			.channel("reservation")
+			.on(
+				"postgres_changes",
+				{
+					event: "INSERT",
+					schema: "public",
+					table: "reservation",
+				},
+				(payload) => {
+					if (Notification.permission === "granted") {
+						navigator.serviceWorker.register("sw.js");
+						Notification.requestPermission(function (result) {
+							if (result === "granted") {
+								navigator.serviceWorker.ready.then(
+									function (registration) {
+										registration.showNotification(
+											`Nueva Reserva en THE CUBE ${payload.new.restaurant}`,
+											{
+												body: `${payload.new.date} a las ${payload.new.hour} para ${payload.new.people} con nombre ${payload.new.name}`,
+											},
+										);
+									},
+								);
+							}
+						});
+					} else if (Notification.permission === "default") {
+						Notification.requestPermission().then((perm) => {
+							if (perm === "granted") {
+								navigator.serviceWorker.register("sw.js");
+								Notification.requestPermission(
+									function (result) {
+										if (result === "granted") {
+											navigator.serviceWorker.ready.then(
+												function (registration) {
+													registration.showNotification(
+														`Nueva Reserva en THE CUBE ${payload.new.restaurant}`,
+														{
+															body: `${payload.new.date} a las ${payload.new.hour} para ${payload.new.people} con nombre ${payload.new.name}`,
+														},
+													);
+												},
+											);
+										}
+									},
+								);
+							} else {
+								alert("Has bloqueado las notis");
+							}
+						});
+					} else {
+						alert("Has bloqueado las notis");
+					}
+
+					console.log(payload);
+				},
+			)
+			.subscribe();
+	};
+
+	getData();
+</script></body></html> 
