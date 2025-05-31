@@ -1,0 +1,24 @@
+---
+//Components
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Verificator/Header/Header.astro";
+import Main from "../components/Verificator/Main/Main.astro";
+---
+<Layout title="Stats">
+    <div class="body-container">
+        <Header></Header>
+        <Main></Main>
+    </div>
+</Layout>
+
+<style lang="scss">
+    .body-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+        padding: 20px;
+    }
+</style>
